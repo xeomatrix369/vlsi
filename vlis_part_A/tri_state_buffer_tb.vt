@@ -1,0 +1,24 @@
+module tristate_buffer_tb;
+
+  reg in;
+  reg en;
+  wire out;
+
+  // Instantiate the tri-state buffer module
+  tristate_buffer buff (out, in, en);
+
+  initial begin
+    // Apply test stimuli
+    in = 0; en = 1; #10; // Apply 0 with enable high for 10ns
+    $display("Input = %b, Enable = %b, Output = %b", in, en, out);
+
+    in = 1; en = 1; #20; // Apply 1 with enable high for 20ns
+    $display("Input = %b, Enable = %b, Output = %b", in, en, out);
+
+    in = 0; en = 0; #30; // Apply 0 with enable low for 30ns (high-impedance)
+    $display("Input = %b, Enable = %b, Output = %b (High-Z)", in, en, out);
+
+    $finish;
+  end
+
+endmodule
